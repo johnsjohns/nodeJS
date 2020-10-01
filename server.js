@@ -19,7 +19,7 @@ const servidor = http.createServer(function(req, resp) {
                     <meta charset="utf-8">
                 </head>
                 <body>
-                    <h1> Casa do Codigo </h1>
+                    <h1> Casa do Código </h1>
                 <body>
             <html>
         `
