@@ -19,26 +19,13 @@ module.exports = (app) => {
 
     app.get('/livros', function(req, resp) {
         const livroDao = new LivroDao(db);
-        
-        livroDao.lista(function(erro, resultados) {
-            resp.marko(
+        livroDao.lista()
+            .then(livros => resp.marko(
                 require('../views/livros/lista/lista.marko'),
                 {
-                    livros: resultados
+                    livros: livros
                 }
-            );
-        }); 
-
-    
-
-
-        // db.all('SELECT * FROM livros', function(erro, resultados) {
-        //     resp.marko(
-        //         require('../views/livros/lista/lista.marko'),
-        //         {
-        //             livros: resultados
-        //         }
-        //     );
-        // });
+            ))
+            .catch(erro => console.log(erro))
     });
 }; 
