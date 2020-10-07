@@ -29,7 +29,7 @@ module.exports = (app) => {
     });
 
     app.get('/livros/form', function(req, resp) {
-        resp.marko(require('../views/livros/form/form.marko'));
+        resp.marko(require('../views/livros/form/form.marko'), {livro: {}});
     });
 
     app.get('/livros/form/:id', function(req, resp) {
@@ -47,6 +47,14 @@ module.exports = (app) => {
         console.log(req.body);
         const livroDao = new LivroDao(db);
         livroDao.adiciona(req.body)
+            .then(resp.redirect('/livros'))
+            .catch(erro => console.log(erro));
+    });
+
+    app.put('/livros', function(req, resp) {
+        console.log(req.body);
+        const livroDao = new LivroDao(db);
+        livroDao.atualiza(req.body)
             .then(resp.redirect('/livros'))
             .catch(erro => console.log(erro));
     });
