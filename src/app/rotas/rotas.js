@@ -1,9 +1,12 @@
 const { check, validationResult } = require('express-validator/check')
-
+const cors = require('cors');
 const LivroDao = require('../infra/livro-dao');
 const db = require('../../config/database');
 
 module.exports = (app) => {
+
+    app.use(cors());
+
     app.get('/', function(req, resp) {
         resp.marko(
             require('../views/base/home/home.marko')
@@ -40,8 +43,8 @@ module.exports = (app) => {
     });
 
     app.post('/livros', [
-            check('titulo').isLength({ min: 5 }),
-            check('preco').isCurrency()
+            check('titulo').isLength({ min: 5 }).withMessage("O titulo precisa ter no mínimo 5 letras!"),
+            check('preco').isCurrency().withMessage("O preço precisa ter uma valor monetário valido!")
         ],
         function(req, resp) {
             console.log(req.body);
@@ -51,7 +54,10 @@ module.exports = (app) => {
 
             if (!erros.isEmpty()) {
                 return resp.marko(
-                    require('../views/livros/form/form.marko'), { livro: {} }
+                    require('../views/livros/form/form.marko'), { 
+                        livro: req.body, 
+                        errosValidacao: erros.array()
+                     }
                 );
             }
 
