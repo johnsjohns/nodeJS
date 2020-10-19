@@ -6,14 +6,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 
-app.all('*', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
-    next();
- });
-
-app.use('/estatico', express.static('./src/app/public/'));
+app.use('/estatico', express.static('src/app/public'));
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -25,8 +18,21 @@ app.use(methodOverride(function (req, res) {
       delete req.body._method;
       return method;
     }
-  }));
+}));
 
 const rotas = require('../app/rotas/rotas');
 rotas(app);
+
+app.use(function(req,resp,next){
+  return resp.status(404).marko(
+    require('../app/views/base/erros/404.marko')
+  );
+});
+
+app.use(function(erro,req,resp,next){
+  return resp.status(500).marko(
+    require('../app/views/base/erros/500.marko')
+  );
+});
+
 module.exports = app;
