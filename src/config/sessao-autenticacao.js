@@ -20,7 +20,7 @@ module.exports = (app)=> {
                     });
                 }
 
-                retunr done(null, usuario);
+                return done(null, usuario);
             }).catch(erro => done(erro, false));
         }
     ));
