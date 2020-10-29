@@ -12,7 +12,7 @@ module.exports = (app)=> {
             passwordField: 'senha'
         },
         (email, senha, done) => {
-            const usuarioDao = new usuarioDao(db);
+            const usuarioDao = new UsuarioDao(db);
             usuarioDao.buscaPorEmail(email).then(usuario => {
                 if(!usuario || senha != usuario.senha) {
                     return done(null, false, {
@@ -49,4 +49,9 @@ module.exports = (app)=> {
 
     app.use(passport.initialize());
     app.use(passport.session());
+
+    app.use(function(req, res, next){
+        req.passport = passport;
+        next;
+    })
 };
