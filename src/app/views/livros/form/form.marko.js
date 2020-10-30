@@ -22,15 +22,15 @@ function render(input, out, __component, component, state) {
 
   component_globals_tag({}, out);
 
-  out.w("<header class=\"cabecalhoPrincipal\"><div class=\"container\">");
+  out.w("<header class=\"cabecalhoPrincipal\"><div class=\"container\"><div class=\"row align-items-center\"><div class=\"col-4\"><h1 class=\"logo\"><img src=\"/estatico/imagens/logo-casadocodigo.svg\" alt=\"Casa do Código\"></h1></div><div class=\"cabecalhoPrincipal-navegacao col-8\"><a href=\"#\" class=\"login\"><i class=\"fas fa-sign-in-alt\"></i>Login</a></div></div></div></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1>Cadastro de livros</h1>");
 
   if (data.errosValidacao) {
     out.w("<div>");
 
-    var for__10 = 0;
+    var for__20 = 0;
 
     marko_forEach(data.errosValidacao, function(erro) {
-      var keyscope__11 = "[" + ((for__10++) + "]");
+      var keyscope__21 = "[" + ((for__20++) + "]");
 
       out.w("<div class=\"alert alert-danger\">" +
         marko_escapeXml(erro.param) +
@@ -42,7 +42,7 @@ function render(input, out, __component, component, state) {
     out.w("</div>");
   }
 
-  out.w("<div class=\"row align-items-center\"><div class=\"col-4\"><h1 class=\"logo\"><img src=\"/estatico/imagens/logo-casadocodigo.svg\" alt=\"Casa do Código\"></h1></div><div class=\"cabecalhoPrincipal-navegacao col-8\"><a href=\"#\" class=\"login\"><i class=\"fas fa-sign-in-alt\"></i>Login</a></div></div></div></header><main class=\"conteudoPrincipal\"><div class=\"container\"><h1>Cadastro de livros</h1><form action=\"/livros/form\" method=\"post\">");
+  out.w("<form action=\"/livros/form\" method=\"post\">");
 
   if (data.livro.id) {
     out.w("<div><input type=\"hidden\" name=\"_method\" value=\"PUT\"><input type=\"hidden\" name=\"id\" value=\"" +
